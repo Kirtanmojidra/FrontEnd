@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Loader({loader}) {
-    console.log(loader)
+    
   return (
     
         <div className={`absolute h-screen w-screen top-0 z-30  ${loader?"block":"hidden"}`}>

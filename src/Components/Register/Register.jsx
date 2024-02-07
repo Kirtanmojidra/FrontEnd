@@ -25,17 +25,25 @@ export default function Register() {
         if(username.length < 5){
             setErrorMessage(": : lenght of username should be 5 or more : :")
         }
-        if(fullname.length < 5){
+        else if(fullname.length < 5){
             setErrorMessage(": : lenght of Fullname should be 5 or more : :")
         }
-        if(password.length < 8){
+        else if(password.length < 8){
             setErrorMessage(": : lenght of password should be 8 or more and should include number : :")
         }
-        if(email.length == 0){
+        else if(email.length == 0){
             setErrorMessage(": : Enter Email : :")
         }
-        await new Promise(resolve => setTimeout(resolve, 3000));
-        setLoader(false)
+        else{
+            axios.post(`${process.env.DB_URL}/api/v1/users/register`,
+            {
+                username,password,fullname,email
+            }).then((res)=>{
+                console.log(res) 
+                setLoader(false)
+            })
+
+        }        
     }
   return (
     <>

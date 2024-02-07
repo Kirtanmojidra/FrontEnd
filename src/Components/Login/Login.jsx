@@ -20,8 +20,11 @@ export default function Login() {
         if(username.length == 0 && email.length == 0){
             setErrorMessage("Username or Email is Requied .....")
         }
-        if(password.length == 0){
+        else if(password.length == 0){
             setErrorMessage(": Enter Valid Password")
+        }
+        else {
+            
         }
     }
   return (
