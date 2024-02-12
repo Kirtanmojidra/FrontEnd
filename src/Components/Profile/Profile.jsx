@@ -1,14 +1,8 @@
 import React, { useEffect } from 'react'
 import "./profile.css"
-import { UseSelector, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 export default function Profile() {
-    useEffect(()=>{
-        const data = useSelector((state)=> state.Data)
-        console.log("hello world my friend")
-        console.log("data : "+data)
-    },[])
     
-
   return (
     <>
         <div className='bg-slate-900'>

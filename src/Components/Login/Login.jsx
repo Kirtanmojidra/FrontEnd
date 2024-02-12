@@ -1,12 +1,19 @@
 import React, { useState } from 'react'
+import axios from "axios"
 import { NavLink } from 'react-router-dom'
-
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { updateDataStore } from '../../Store/DataStore'
+import Loader from '../Loader/Loader'
 export default function Login() {
     const [isHidden , setIsHidden] = useState("password")
+    const [loader,setLoader] = useState(false)
     const [username,setUsername] = useState("")
     const [email,setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [ErrorMessage ,setErrorMessage] = useState("")
+    const Dispatch = useDispatch()
+    const Navigation = useNavigate()
     const isPasswordHidden = ()=>{
         if(isHidden == "password"){
             setIsHidden("text")
@@ -15,8 +22,9 @@ export default function Login() {
             setIsHidden("password")
         }
     }
-    const handleForm = (e)=>{
+    const handleForm = async(e)=>{
         e.preventDefault()
+        setLoader(true)
         if(username.length == 0 && email.length == 0){
             setErrorMessage("Username or Email is Requied .....")
         }
@@ -24,11 +32,24 @@ export default function Login() {
             setErrorMessage(": Enter Valid Password")
         }
         else {
-            
+            await axios.post(`/api/v1/users/login `,{
+                username,email,password
+            })
+            .then((res)=>{console.log(res)
+                const data = res.data.data.user
+                Dispatch(updateDataStore(data))
+                Navigation(`${`/user/profile/${username}`}`)    
+                setLoader(false)
+            })
+            .catch((error)=>{console.log("Error :" +error)
+                setLoader(false)
+        })
         }
+        setLoader(false)
     }
   return (
     <>
+    <Loader loader={loader}/>
         <div className='w-screen h-screen flex'>
             <div className='w-1/2 hidden md:block bg-gradient-to-bl from-slate-900 from-10% via-slate-600 via-50% to-slate-400 to-100%'>
                 <div className='w-full h-full flex justify-center place-items-center'>
