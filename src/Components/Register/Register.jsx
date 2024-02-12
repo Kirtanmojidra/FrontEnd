@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import axios from "axios"
 import { NavLink } from 'react-router-dom'
 import Loader from '../Loader/Loader'
+import { useNavigate } from 'react-router-dom'
+
 export default function Register() {
     const [isHidden , setIsHidden] = useState("password")
     const [username, setUsername] = useState("")
@@ -10,6 +12,7 @@ export default function Register() {
     const [fullname, setFullname] = useState("")
     const [ErrorMassage, setErrorMessage] = useState("")
     const [loader ,setLoader] = useState(false)
+    const Navigation = useNavigate()
     const isPasswordHidden = ()=>{
         if(isHidden == "password"){
             setIsHidden("text")
@@ -35,15 +38,22 @@ export default function Register() {
             setErrorMessage(": : Enter Email : :")
         }
         else{
-            axios.post(`${process.env.DB_URL}/api/v1/users/register`,
+            await axios.post("/api/v1/users/register",
             {
                 username,password,fullname,email
             }).then((res)=>{
-                console.log(res) 
+                console.log(res)
+                Navigation("/home") 
                 setLoader(false)
-            })
+            }).catch(
+                (error)=>{
+                    console.log("error :"+error)
+                    setLoader(false)
+                }
+            )
 
-        }        
+        }      
+        setLoader(false)  
     }
   return (
     <>
