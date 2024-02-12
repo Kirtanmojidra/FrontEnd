@@ -15,7 +15,7 @@ export default function Home() {
                                     es nobis veniam at quod suscipit voluptatum it</p>
                         </div>
                         <div className='w-full flex justify-center mt-20'>
-                            <NavLink to="login" className='p-1 px-4 text-orange-600 border-2 border-solid border-orange-600 rounded-sm hover:bg-orange-600 hover:text-black hover:font-semibold hover:scale-105'>Get Started</NavLink>
+                            <NavLink to="/login" className='p-1 px-4 text-orange-600 border-2 border-solid border-orange-600 rounded-sm hover:bg-orange-600 hover:text-black hover:font-semibold hover:scale-105'>Get Started</NavLink>
                         </div>
                     </div>
                 </div>

@@ -3,12 +3,14 @@ import { createSlice } from "@reduxjs/toolkit";
 export const DataStore = createSlice({
     name: "datastore",
     initialState: {
-        Data : {}
+        Data:{}
     },
     reducers: {
-        updateDataStore: (action,state)=>{
+        updateDataStore: (state,action)=>{
             const data = action.payload
+            console.log(action)
             state.Data = data
+            
         },
 
         getDataStore: (state)=>{

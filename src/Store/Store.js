@@ -1,8 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit"
 import  DataStore  from "./DataStore.js"
 const Store = configureStore({
-    reducer: {
-        DataStore
-    }
+    reducer: DataStore
 })
 export default Store

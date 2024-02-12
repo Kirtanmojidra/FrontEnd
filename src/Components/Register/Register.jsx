@@ -3,6 +3,10 @@ import axios from "axios"
 import { NavLink } from 'react-router-dom'
 import Loader from '../Loader/Loader'
 import { useNavigate } from 'react-router-dom'
+import {  useDispatch, useSelector } from 'react-redux'
+import { updateDataStore } from '../../Store/DataStore'
+
+
 
 export default function Register() {
     const [isHidden , setIsHidden] = useState("password")
@@ -13,6 +17,9 @@ export default function Register() {
     const [ErrorMassage, setErrorMessage] = useState("")
     const [loader ,setLoader] = useState(false)
     const Navigation = useNavigate()
+    const  data = useSelector((state)=> state.Data)
+    const Dispatch = useDispatch()
+
     const isPasswordHidden = ()=>{
         if(isHidden == "password"){
             setIsHidden("text")
@@ -43,8 +50,10 @@ export default function Register() {
                 username,password,fullname,email
             }).then((res)=>{
                 console.log(res)
-                Navigation("/home") 
                 setLoader(false)
+                Dispatch(updateDataStore({data: res.data.data}))
+                Navigation(`${`/user/profile/${res.data.data.username}`}`) 
+                
             }).catch(
                 (error)=>{
                     console.log("error :"+error)
