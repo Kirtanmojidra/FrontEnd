@@ -1,8 +1,24 @@
 import React, { useEffect } from 'react'
 import "./profile.css"
 import { useSelector } from 'react-redux'
-export default function Profile() {
+import { useDispatch } from 'react-redux'
+import { updateDataStore } from '../../Store/DataStore'
+import { useNavigation } from 'react-router-dom'
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
+export default function  Profile() {
+    const Dispatch = useDispatch()
+    const Navigation = useNavigation()
+    const {username} = useParams()
+    let  data = useSelector((state)=>state.Data)
+    const getData = async()=>{
+        await axios.get("/api/v1/users/c/kirtan0001").then((res)=>console.log(res))
+    }
     
+    useEffect(()=>{
+        getData()
+        console.log("called")
+    },[])
   return (
     <>
         <div className='bg-slate-900'>
@@ -25,11 +41,11 @@ export default function Profile() {
                     <div className='w-full flex justify-around pt-10 max-w-[700px]'>
                         <div className="pr-10">
                             <h1 className='text-slate-400 w-full flex justify-center'>Owner</h1>
-                            <h1 className='text-orange-600 font-mono'>Dodge Motors</h1>
+                            <h1 className='text-orange-600 font-mono'>{data.fullname}</h1>
                         </div>
                         <div className='pl-20'>
                         <h1 className='text-slate-400 w-full flex justify-center'>Owner</h1>
-                            <h1 className='text-orange-600 font-mono'>Dodge Motors</h1>
+                            <h1 className='text-orange-600 font-mono'>{data.username}</h1>
                         </div>
                     </div>
                 </div>

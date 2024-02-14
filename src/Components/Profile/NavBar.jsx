@@ -25,10 +25,10 @@ export default function NavBar() {
         <div className={`${isNavBarToggle ? "" : "hidden"} absolute justify-end bg-slate-800 p-2 px-10 right-0 top-12 w-full max-w-[500px] rounded-bl-lg rounded-tl-lg  z-20`}>
             <ul className='p-2' 
             onClick={navBarToggle}>
-                <NavLink to="profile" className='p-2 text-orange-600 border-2 border-solid border-orange-600 px-10 m-2 hover:bg-orange-600 hover:text-black hover:font-mono hover:font-semibold hover:scale-105 flex justify-center'>MyProfile</NavLink>
-                <NavLink to="watchList" className='p-2 text-orange-600 border-2 border-solid border-orange-600 px-10 m-2 hover:bg-orange-600 hover:text-black hover:font-mono hover:font-semibold hover:scale-105 flex justify-center'>WatchList</NavLink>
-                <NavLink to="WatchHistory" className='p-2 text-orange-600 border-2 border-solid border-orange-600 px-10 m-2 hover:bg-orange-600 hover:text-black hover:font-mono hover:font-semibold hover:scale-105 flex justify-center'>WatchHistory</NavLink>
-                <NavLink to="channel" className='p-2 text-orange-600 border-2 border-solid border-orange-600 px-10 m-2 hover:bg-orange-600 hover:text-black hover:font-mono hover:font-semibold hover:scale-105 flex justify-center'>Channels</NavLink>
+                <NavLink to="/user/profile" className='p-2 text-orange-600 border-2 border-solid border-orange-600 px-10 m-2 hover:bg-orange-600 hover:text-black hover:font-mono hover:font-semibold hover:scale-105 flex justify-center'>MyProfile</NavLink>
+                <NavLink to="/user/watchList" className='p-2 text-orange-600 border-2 border-solid border-orange-600 px-10 m-2 hover:bg-orange-600 hover:text-black hover:font-mono hover:font-semibold hover:scale-105 flex justify-center'>WatchList</NavLink>
+                <NavLink to="/user/WatchHistory" className='p-2 text-orange-600 border-2 border-solid border-orange-600 px-10 m-2 hover:bg-orange-600 hover:text-black hover:font-mono hover:font-semibold hover:scale-105 flex justify-center'>WatchHistory</NavLink>
+                <NavLink to="/user/channel" className='p-2 text-orange-600 border-2 border-solid border-orange-600 px-10 m-2 hover:bg-orange-600 hover:text-black hover:font-mono hover:font-semibold hover:scale-105 flex justify-center'>Channels</NavLink>
             </ul>
         </div>
       </nav>
