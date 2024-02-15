@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import "./profile.css"
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
@@ -10,9 +10,27 @@ export default function  Profile() {
     const Dispatch = useDispatch()
     const Navigation = useNavigation()
     const {username} = useParams()
-    let  data = useSelector((state)=>state.Data)
+    const [isOwner, setIsOwner] = useState(false)
+    const [data,setData] = useState({})
+
     const getData = async()=>{
-        await axios.get("/api/v1/users/c/kirtan0001").then((res)=>console.log(res))
+        setIsOwner(false)
+        await axios.get(`/api/v1/users/c/${username}`)
+        .then((res)=> {
+            setData(res.data.data)
+        })
+        .catch((err)=>console.log("error in fatching Data:"+err))
+
+        await axios.get("/api/v1/users/currentUser")
+        .then((res)=>{
+            if(res.data.data.username = username){
+                console.log(res.data.data)
+                setIsOwner(true)
+                console.log(isOwner)
+            }
+        }).catch((err)=>{
+            console.log("error ")
+        })
     }
     
     useEffect(()=>{
@@ -50,18 +68,18 @@ export default function  Profile() {
                     </div>
                 </div>
                 {/* Following Button */}
-                <div className='w-full flex justify-center pt-5 container-snap' >
+                <div className={`${isOwner?"hidden":"block"} w-full flex justify-center pt-5 container-snap `} >
                     <button className='p-2 px-5 border-2 border-orange-600 text-orange-500 hover:text-black hover:bg-orange-600 hover:font-semibold scale-105'>Follow</button>
                 </div>
                 {/*Follower and Following List */}
                 <div className='w-full h-full flex justify-center container-snap'>
                     <div className='w-full flex justify-around pt-10 max-w-[700px]'>
                         <div className="pr-10">
-                            <h1 className='w-full flex justify-center text-orange-600 font-mono'>200k</h1>
+                            <h1 className='w-full flex justify-center text-orange-600 font-mono'>{data.subscribersCount}</h1>
                             <h1 className='text-slate-400'>Followers</h1>
                         </div>
                         <div className='pl-20'>
-                            <h1 className='w-full flex justify-center text-orange-600 font-mono'>200</h1>
+                            <h1 className='w-full flex justify-center text-orange-600 font-mono'>{data.subscribedCount}</h1>
                             <h1 className='text-slate-400'>Followings</h1>   
                         </div>
                     </div>

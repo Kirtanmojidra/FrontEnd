@@ -52,7 +52,7 @@ export default function Register() {
                 console.log(res)
                 setLoader(false)
                 Dispatch(updateDataStore({data: res.data.data}))
-                Navigation(`${`/user/login`}`) 
+                Navigation(`${`/login`}`) 
                 
             }).catch(
                 (error)=>{
