@@ -12,19 +12,22 @@ export default function  Profile() {
     const {username} = useParams()
     const [isOwner, setIsOwner] = useState(false)
     const [data,setData] = useState({})
+    const [state,UpdateState] = useState(false)
+    
 
     const getData = async()=>{
         setIsOwner(false)
         await axios.get(`/api/v1/users/c/${username}`)
         .then((res)=> {
             setData(res.data.data)
+            console.log("Profile :"+username)
         })
         .catch((err)=>console.log("error in fatching Data:"+err))
 
         await axios.get("/api/v1/users/currentUser")
         .then((res)=>{
-            if(res.data.data.username = username){
-                console.log(res.data.data)
+            if(res.data.data.username === username){
+                console.log("Current UserData: "+res.data.data.username)
                 setIsOwner(true)
                 console.log(isOwner)
             }
@@ -37,6 +40,19 @@ export default function  Profile() {
         getData()
         console.log("called")
     },[])
+        console.log("Data:",data)
+    const follow = async(e)=>{
+        await axios.get(`/api/v1/users/follow/${username}`)
+        .then((res)=>{
+            UpdateState(!state)
+            getData()
+            console.log("responce :",res.data)
+        })
+        .catch((err)=>{
+            console.log(err)
+        })
+        
+    }
   return (
     <>
         <div className='bg-slate-900'>
@@ -68,19 +84,20 @@ export default function  Profile() {
                     </div>
                 </div>
                 {/* Following Button */}
-                <div className={`${isOwner?"hidden":"block"} w-full flex justify-center pt-5 container-snap `} >
-                    <button className='p-2 px-5 border-2 border-orange-600 text-orange-500 hover:text-black hover:bg-orange-600 hover:font-semibold scale-105'>Follow</button>
+                <div className={`${isOwner?"hidden":"display"}  w-full flex justify-center pt-5 container-snap `} >
+                    <button className={` p-2 px-5 border-2  border-orange-600 text-orange-500 hover:text-black hover:bg-orange-600 hover:font-semibold scale-105 ${data.isSubscribed?"bg-orange-600 text-slate-600":"bg-slate-800"}`}
+                    onClick={follow}>{data.isSubscribed?"Following":"follow"}</button>
                 </div>
                 {/*Follower and Following List */}
                 <div className='w-full h-full flex justify-center container-snap'>
                     <div className='w-full flex justify-around pt-10 max-w-[700px]'>
                         <div className="pr-10">
-                            <h1 className='w-full flex justify-center text-orange-600 font-mono'>{data.subscribersCount}</h1>
-                            <h1 className='text-slate-400'>Followers</h1>
+                            <h1 className='w-full flex justify-center text-orange-600 font-mono'>{data.subscribedCount}</h1>
+                            <h1 className='text-slate-400'>Following</h1>
                         </div>
                         <div className='pl-20'>
-                            <h1 className='w-full flex justify-center text-orange-600 font-mono'>{data.subscribedCount}</h1>
-                            <h1 className='text-slate-400'>Followings</h1>   
+                            <h1 className='w-full flex justify-center text-orange-600 font-mono'>{data.subscribersCount}</h1>
+                            <h1 className='text-slate-400'>Followers</h1>   
                         </div>
                     </div>
                 </div>
